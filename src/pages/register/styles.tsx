@@ -46,7 +46,7 @@ export const ComponentLogin = styled.div`
     align-items: center;
     width: 400px;
     height: 350px;
-    background-color: rgb(166, 136, 54);
+    background-color: rgb(147, 183, 146);
 
     opacity: 0.8;
     border-radius: 10px;

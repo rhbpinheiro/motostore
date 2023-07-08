@@ -5,7 +5,7 @@ function IconUnorderedList(props: React.SVGProps<SVGSVGElement>) {
   return (
     <svg
       viewBox="0 0 1024 1024"
-      fill="currentColor"
+      fill="rgb(166, 136, 54)"
       height="1em"
       width="1em"
       {...props}

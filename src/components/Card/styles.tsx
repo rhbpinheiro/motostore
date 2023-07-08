@@ -10,14 +10,13 @@ export const Container = styled.div`
 export const Titulo = styled.h2`
     font-size: 35;
     color: rgb(166, 136, 54);
-    padding: 20px;
     text-align: center;
 `;
 
 export const MotorcycleListContainer = styled.div`
     display: flex;
     flex-wrap: wrap;
-    gap: 20px;
+    gap: 40px;
     justify-content: center;
 `;
 
@@ -55,9 +54,16 @@ export const BuyButton = styled.button`
     cursor: pointer;
 `;
 export const OffersWeek = styled.div`
-    width: 900px;
+    width: 100%;
     margin: auto;
     display: flex;
-    padding: 0 15px 0 15px;
+    padding: 20px 0 20px 0;
     justify-content: space-between;
+`;
+
+export const ToogleLayout = styled.div`
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
 `;

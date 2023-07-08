@@ -1,3 +1,4 @@
+import { BrowserRouter } from 'react-router-dom';
 import MotorcycleCard from '../../components/Card';
 import Content from '../../components/Content';
 import Header from './header/Index';
@@ -7,10 +8,9 @@ export default function HomePage() {
     return (
         <C.Container>
             <Header />
-            <Content>
-              
-                <MotorcycleCard image={''} name={''} brand={''} displacement={''} />
-            </Content>
+            <C.ContentContainer>
+             <MotorcycleCard id={''} imageUrl={''} name={''} brand={''} displacement={''} description={''}/>
+            </C.ContentContainer>
         </C.Container>
     );
 }

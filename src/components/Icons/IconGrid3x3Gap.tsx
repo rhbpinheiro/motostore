@@ -4,7 +4,7 @@ import * as React from "react";
 function IconGrid3x3Gap(props: React.SVGProps<SVGSVGElement>) {
   return (
     <svg
-      fill="currentColor"
+      fill="rgb(166, 136, 54)"
       viewBox="0 0 16 16"
       height="1em"
       width="1em"

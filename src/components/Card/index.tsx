@@ -1,17 +1,11 @@
 import { useNavigate } from 'react-router-dom';
 import * as C from './styles';
-import ListItem from '../List';
 import { useEffect, useState } from 'react';
 import IconGrid3x3Gap from '../Icons/IconGrid3x3Gap';
 import { collection, getDocs } from 'firebase/firestore';
 import { db } from '../../logic/firebase/config/firebaseconfig';
-
-interface CardProps {
-    image: string;
-    name: string;
-    brand: string;
-    displacement: string;
-}
+import IconUnorderedList from '../Icons/IconUnorderedList';
+import ListItemHor from '../ListItem/List';
 
 interface Motocycle {
     id: string;
@@ -19,21 +13,27 @@ interface Motocycle {
     name: string;
     brand: string;
     displacement: string;
+    description: string;
 }
 
 export default function MotorcycleCard({
-    image,
+  id,
+    imageUrl,
     name,
     brand,
     displacement,
-}: CardProps) {
+    description,
+}: Motocycle) {
     const navigate = useNavigate();
     const handleBuy = (motorcycle: Motocycle) => {
-        navigate('/vendas', { state: { motorcycle } });
+        navigate(`/vendas`, { state: { motorcycle } });
     };
 
     const [changeLayout, setChangeLayout] = useState<boolean>(true);
     const [motocycles, setMotocycles] = useState<Motocycle[]>([]);
+    function handleChangeLayout() {
+        setChangeLayout((prevLayout) => !prevLayout);
+    }
 
     useEffect(() => {
         const getMotocycles = async () => {
@@ -51,14 +51,25 @@ export default function MotorcycleCard({
         <C.Container>
             <C.OffersWeek>
                 <C.Titulo>Ofertas Da Semana</C.Titulo>
-                <IconGrid3x3Gap />
+                {changeLayout ? (
+                    <C.ToogleLayout onClick={handleChangeLayout}>
+                        <IconUnorderedList height={25} width={25}/>
+                    </C.ToogleLayout>
+                ) : (
+                    <C.ToogleLayout onClick={handleChangeLayout}>
+                        <IconGrid3x3Gap height={25} width={25}/>
+                    </C.ToogleLayout>
+                )}
             </C.OffersWeek>
 
-            {!changeLayout ? (
+            {changeLayout ? (
                 <C.MotorcycleListContainer>
                     {motocycles.map((motocycle) => (
                         <C.CardContainer key={motocycle.id}>
-                            <C.Image src={motocycle.imageUrl} alt="Motorcycle" />
+                            <C.Image
+                                src={motocycle.imageUrl}
+                                alt="Motorcycle"
+                            />
                             <C.Title>{motocycle.name}</C.Title>
                             <C.Description>
                                 Marca: {motocycle.brand}
@@ -75,7 +86,7 @@ export default function MotorcycleCard({
             ) : (
                 <div>
                     {motocycles.map((motocycle) => (
-                        <ListItem
+                        <ListItemHor
                             key={motocycle.id}
                             imageUrl={motocycle.imageUrl}
                             name={motocycle.name}
