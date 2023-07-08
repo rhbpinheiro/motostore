@@ -3,7 +3,8 @@ import  * as C from './style';
 
 
 interface ListItemProps {
-  image: string;
+
+  imageUrl: string;
   name: string;
   brand: string;
   displacement: string;
@@ -13,7 +14,7 @@ interface ListItemProps {
 
 
 export default function ListItem({
-  image,
+  imageUrl,
   name,
   brand,
   displacement,
@@ -21,7 +22,7 @@ export default function ListItem({
 }: ListItemProps ){
   return (
     <C.ItemContainer>
-      <C.Image src={image} alt="Motorcycle" />
+      <C.Image src={imageUrl} alt="Motorcycle" />
       <C.Title>{name}</C.Title>
       <C.Description>Marca: {brand}</C.Description>
       <C.Description>Cilindrada: {displacement}</C.Description>
