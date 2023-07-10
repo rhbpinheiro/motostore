@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { Button } from '../register/styles';
 
 export const Container = styled.div`
     display: flex;
@@ -24,28 +25,30 @@ export const IconButton = styled.div`
     height: 30px;
 `;
 
-export const Content = styled.div`
+export const ModalOverlay = styled.div`
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
     display: flex;
+    justify-content: center;
     align-items: center;
-    flex-direction: column;
-    width: 1000px;
-    margin-top: 90px;
 `;
 
-const ModalOverlay = styled.div`
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
-  display: flex;
-  justify-content: center;
-  align-items: center;
+export const ModalContent = styled.div`
+    background-color: white;
+    padding: 20px;
+    border-radius: 4px;
 `;
 
-const ModalContent = styled.div`
-  background-color: white;
-  padding: 20px;
-  border-radius: 4px;
+export const ButtonModal = styled(Button)`
+    background-color: rgb(166, 136, 54);
+`;
+
+export const GroupButtons = styled.div`
+    width: 70px;
+    display: flex;
+    justify-content: space-between;
 `;

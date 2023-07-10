@@ -15,7 +15,7 @@ export default function AppRoutes() {
                 <Route path="/home" element={<HomePage />} />
                 <Route path="/motos" element={<HomePage />} />
                 <Route path="/cadastro" element={<ProductPage />} />
-                <Route path="/vendas" element={<SalesPage />} />
+                <Route path="/vendas/:id" element={<SalesPage />} />
                 <Route path="*" element={<NotFound />} />
             </Routes>
         </BrowserRouter>

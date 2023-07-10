@@ -17,8 +17,16 @@ export function Register() {
 
     function handleSignIn(e: any) {
         e.preventDefault();
-        createUserWithEmailAndPassword(email, password);
-        navigate('/');
+        if (
+            password === confPassword &&
+            email.length > 6 &&
+            email.includes('@')
+        ) {
+            createUserWithEmailAndPassword(email, password);
+            navigate('/');
+        } else {
+            alert('Preencha os campos corretamente');
+        }
     }
     if (loading) {
         return <Loading />;
@@ -59,9 +67,7 @@ export function Register() {
                     </C.Button>
                     <C.Register>
                         Já tem cadastro?
-                        <C.LinkRegister to="/">
-                            Faça o Login.
-                        </C.LinkRegister>
+                        <C.LinkRegister to="/">Faça o Login.</C.LinkRegister>
                     </C.Register>
                 </C.Form>
             </C.ComponentLogin>

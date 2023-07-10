@@ -1,24 +1,7 @@
 import styled from 'styled-components';
-export const Container = styled.div`
-    width: 1000px;
-    margin-top: 60px;
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-`;
 
-export const Titulo = styled.h2`
-    font-size: 35;
-    color: rgb(166, 136, 54);
-    text-align: center;
-`;
 
-export const MotorcycleListContainer = styled.div`
-    display: flex;
-    flex-wrap: wrap;
-    gap: 40px;
-    justify-content: center;
-`;
+
 
 export const CardContainer = styled.div`
     width: 250px;
@@ -26,6 +9,7 @@ export const CardContainer = styled.div`
     border-radius: 8px;
     padding: 16px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+ 
 `;
 
 export const Image = styled.img`
