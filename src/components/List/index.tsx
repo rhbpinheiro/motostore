@@ -1,5 +1,7 @@
 import React from 'react';
 import * as C from './style';
+import ImageFake from '../../assets/sem-imagem7.jpg';
+
 
 interface ListItemProps {
     imageUrl: string;
@@ -22,7 +24,7 @@ export default function ListItem({
 }: ListItemProps) {
     return (
         <C.ItemContainer>
-            <C.Image src={imageUrl} alt="Motorcycle" />
+            <C.Image src={imageUrl || ImageFake} alt="Motorcycle" />
             <C.ColInfo>
                 <C.Title>{name}</C.Title>
                 <C.Description>Marca: {brand}</C.Description>

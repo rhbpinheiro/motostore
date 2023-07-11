@@ -28,6 +28,14 @@ export const ImageLogo = styled.img`
         height: 60px;
     }
 `;
+export const ImageFooter = styled.img`
+    width: 100px;
+    height: 30px;
+    @media (max-width: 768px) {
+        width: 80px;
+        height: 20px;
+    }
+`;
 
 export const Menu = styled.nav`
     display: flex;

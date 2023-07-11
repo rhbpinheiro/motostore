@@ -1,7 +1,9 @@
 import * as C from './styles';
 import Logo from '../../assets/logo.png';
+import MotoStore from '../../assets/motostore.png';
 import { signOut } from 'firebase/auth';
 import { auth } from '../../logic/firebase/config/firebaseconfig';
+
 
 interface LayoutContainerProps {
     children: any;
@@ -27,7 +29,10 @@ export default function DefaultLayout({ children }: LayoutContainerProps) {
                 </C.Menu>
             </C.Header>
             <C.Content>{children}</C.Content>
-            <C.Footer>MotoStore</C.Footer>
+            <C.Footer>
+            <C.ImageFooter src={MotoStore} alt="Logo" />
+
+            </C.Footer>
         </C.LayoutContainer>
     );
 }

@@ -1,4 +1,5 @@
 import * as C from './styles';
+import ImagemFake from '../../../assets/sem-imagem7.jpg'
 interface ListItemProps {
     id?: string;
     imageUrl: string;
@@ -19,7 +20,7 @@ export default function ListItemHor({
 }: ListItemProps) {
     return (
         <C.ListItemContainer key={id}>
-            <C.Image src={imageUrl} alt="Motorcycle" />
+            <C.Image src={imageUrl || ImagemFake} alt="Motorcycle" />
             <C.Title>{name}</C.Title>
             <C.Description>Marca: {brand}</C.Description>
             <C.Description>Cilindrada: {displacement}</C.Description>

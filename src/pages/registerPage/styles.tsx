@@ -23,6 +23,7 @@ export const Title = styled.h2`
 export const IconButton = styled.div`
     width: 30px;
     height: 30px;
+    cursor: pointer;
 `;
 
 export const ModalOverlay = styled.div`
@@ -37,11 +38,6 @@ export const ModalOverlay = styled.div`
     align-items: center;
 `;
 
-export const ModalContent = styled.div`
-    background-color: white;
-    padding: 20px;
-    border-radius: 4px;
-`;
 
 export const ButtonModal = styled(Button)`
     background-color: rgb(166, 136, 54);
@@ -52,3 +48,33 @@ export const GroupButtons = styled.div`
     display: flex;
     justify-content: space-between;
 `;
+
+export const RegistrationOptions = styled.div`
+
+`;
+
+export const DivButton = styled.div`
+  display: flex;
+  width: 40px;
+  height: 30px;
+  margin-right: 10px;
+  padding: 10px;
+  border: 1px solid rgb(166, 136, 54);
+  border-radius: 10px;
+  cursor: pointer;
+
+  &:hover {
+    background-color:  rgb(147, 183, 146);
+  }
+`
+export const ModalContent = styled.div`
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content:space-between;
+  width: 400px;
+  height: 350px;
+  padding: 20px;
+  border-radius: 15px;
+`;
+

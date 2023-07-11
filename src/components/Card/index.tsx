@@ -1,4 +1,5 @@
 import * as C from './styles';
+import ImageFake from '../../assets/sem-imagem7.jpg';
 
 interface Motocycle {
     id?: string;
@@ -21,7 +22,7 @@ export default function MotorcycleCard({
 }: Motocycle) {
     return (
         <C.CardContainer key={id}>
-            <C.Image src={imageUrl} alt="Motorcycle" />
+            <C.Image src={imageUrl || ImageFake} alt="Motorcycle" />
             <C.Title>{name}</C.Title>
             <C.Description>Marca: {brand}</C.Description>
             <C.Description>Cilindrada: {displacement}</C.Description>

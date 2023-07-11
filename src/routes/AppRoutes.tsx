@@ -4,7 +4,7 @@ import { NotFound } from '../pages/notFound';
 import { Login } from '../pages/login';
 import HomePage from '../pages/homePage/Index';
 import SalesPage from '../pages/salesPage';
-import ProductPage from '../pages/productPage';
+import ProductPage from '../pages/registerPage';
 
 export default function AppRoutes() {
     return (
