@@ -11,12 +11,13 @@ export const LayoutContainer = styled.div`
     min-height: 100vh;
     max-width: 1000px;
     margin: 0 auto;
+  
 `;
 
 export const Header = styled.header`
     height: 85px;
     width: 100%;
-    padding: 0 20px, 40px;
+    padding: 0 20px;
     border-bottom: 1px solid rgb(166, 136, 54);
     display: flex;
     justify-content: space-between;
@@ -24,7 +25,6 @@ export const Header = styled.header`
     z-index: 999;
     @media (max-width: 768px) {
         height: 70px;
-        padding: 60px0 20px 0;
         justify-content: space-between;
     }
 `;
@@ -58,7 +58,9 @@ export const MenuIcon = styled.nav`
     justify-content: space-around;
     display: none;
     cursor: pointer;
+    margin-right: 3px;
     @media (max-width: 768px) {
+      width: 65px;
         display: block;
     }
 `;
