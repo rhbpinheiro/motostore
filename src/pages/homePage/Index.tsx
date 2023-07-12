@@ -11,6 +11,9 @@ import DefaultLayout from '../../components/LayoutContainer/indes';
 import { Button } from '../login/styles';
 import IconBxEditAlt from '../../components/Icons/IconBxEditAlt';
 import IconDelete from '../../components/Icons/IconDelete';
+import IconDeleteOutline from '../../components/Icons/IconDeleteOutline';
+import { Loading } from '../loading/styles';
+import { getAuth, onAuthStateChanged } from 'firebase/auth';
 
 interface Motocycle {
     id: string;
@@ -22,17 +25,32 @@ interface Motocycle {
 }
 
 export default function HomePage() {
+    const savedState = localStorage.getItem('estado');
+    const initialState = savedState ? JSON.parse(savedState) : true;
     const navigate = useNavigate();
-    const [changeLayout, setChangeLayout] = useState<boolean>(true);
-    const [motocycles, setMotocycles] = useState<any[]>([]);
+    const [changeLayout, setChangeLayout] = useState<boolean>(initialState);
+    const [motocycles, setMotocycles] = useState<any[]>(
+        getStoredMotocycles() || []
+    );
+    localStorage.setItem('estado', JSON.stringify(changeLayout));
+
     function handleChangeLayout() {
         setChangeLayout((prevLayout) => !prevLayout);
     }
 
-    const handleBuy = (motorcycle: Motocycle) => {
-        navigate(`/vendas/:${motorcycle.id}`, { state: { motorcycle } });
+    const handleDetails = (motorcycle: Motocycle) => {
+        navigate(`/home/details/:${motorcycle.id}`, { state: { motorcycle } });
     };
+
     useEffect(() => {
+        localStorage.setItem('motocycles', JSON.stringify(motocycles));
+        const auth = getAuth();
+        onAuthStateChanged(auth, (user) => {
+            if (!user) {
+                navigate('/');
+            }
+        });
+
         const getMotocycles = async () => {
             const motocyclesRef = collection(db, 'motocycles');
 
@@ -44,7 +62,6 @@ export default function HomePage() {
                     const motocycleData = doc.data();
                     const motocycleId = doc.id;
                     motocyclesData.push({ id: motocycleId, ...motocycleData });
-                    console.log(motocycleId);
                 });
                 setMotocycles(motocyclesData);
             } catch (error) {
@@ -54,6 +71,12 @@ export default function HomePage() {
 
         getMotocycles();
     }, []);
+
+    function getStoredMotocycles() {
+        const storedMotocycles = localStorage.getItem('motocycles');
+        return storedMotocycles ? JSON.parse(storedMotocycles) : null;
+    }
+
     return (
         <DefaultLayout>
             <C.OffersWeek>
@@ -68,36 +91,41 @@ export default function HomePage() {
                     </C.ToogleLayout>
                 )}
             </C.OffersWeek>
-            {changeLayout ? (
-                <C.MotorcycleListContainer>
-                    {motocycles.map((motocycle) => (
-                        <MotorcycleCard
-                            key={motocycle.id}
-                            imageUrl={motocycle.imageUrl}
-                            name={motocycle.name}
-                            brand={motocycle.brand}
-                            displacement={motocycle.displacement}
-                            onBuy={() => handleBuy(motocycle)}
-                        />
-                    ))}
-                </C.MotorcycleListContainer>
+            {motocycles.length === 0 ? (
+                <C.Container>
+                    <IconDeleteOutline height={45} width={45} />
+                    <C.Text>Nenhuma moto encontrada</C.Text>
+                </C.Container>
             ) : (
                 <div>
-                    {motocycles.map((motocycle) => (
-                        <ListItemHor
-                            key={motocycle.id}
-                            id={motocycle.id}
-                            imageUrl={motocycle.imageUrl}
-                            name={motocycle.name}
-                            brand={motocycle.brand}
-                            displacement={motocycle.displacement}
-                            children={
-                                <div>
-                                   
-                                </div>
-                            }
-                        />
-                    ))}
+                    {changeLayout ? (
+                        <C.MotorcycleListContainer>
+                            {motocycles.map((motocycle) => (
+                                <MotorcycleCard
+                                    key={motocycle.id}
+                                    imageUrl={motocycle.imageUrl}
+                                    name={motocycle.name}
+                                    brand={motocycle.brand}
+                                    displacement={motocycle.displacement}
+                                    onBuy={() => handleDetails(motocycle)}
+                                />
+                            ))}
+                        </C.MotorcycleListContainer>
+                    ) : (
+                        <div>
+                            {motocycles.map((motocycle) => (
+                                <ListItemHor
+                                    key={motocycle.id}
+                                    id={motocycle.id}
+                                    imageUrl={motocycle.imageUrl}
+                                    name={motocycle.name}
+                                    brand={motocycle.brand}
+                                    displacement={motocycle.displacement}
+                                    children={<div></div>}
+                                />
+                            ))}
+                        </div>
+                    )}
                 </div>
             )}
         </DefaultLayout>

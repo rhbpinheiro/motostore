@@ -59,7 +59,7 @@ export function Register() {
                         placeholder="Confirm Password"
                         value={confPassword}
                         onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                            setPassword(e.target.value)
+                            setConfPassword(e.target.value)
                         }
                     />
                     <C.Button type="submit" onClick={handleSignIn}>

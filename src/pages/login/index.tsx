@@ -14,18 +14,17 @@ export function Login() {
     const [signInWithEmailAndPassword, user, loading, error] =
         useSignInWithEmailAndPassword(auth);
 
-    useEffect(() => {
-        const unsubscribe = auth.onAuthStateChanged((user) => {
-            if (user) {
-                navigate('/home');
-            } else {
-              navigate('/');
-
-            }
-        });
-
-        return () => unsubscribe();
-    }, [navigate]);
+        useEffect(() => {
+          const unsubscribe = auth.onAuthStateChanged((user) => {
+              if (user) {
+                  navigate('/home');
+              } else {
+                  navigate('/');
+              }
+          });
+  
+          return () => unsubscribe();
+      }, [navigate]);
 
     function handleSingIn(e: any) {
         e.preventDefault();
@@ -63,7 +62,7 @@ export function Login() {
                     </C.Button>
                     <C.Register>
                         Não tem acesso?{' '}
-                        <C.LinkRegister to="/registro">
+                        <C.LinkRegister to="/signup">
                             Cadastre-se
                         </C.LinkRegister>
                     </C.Register>

@@ -1,15 +1,17 @@
 import styled from 'styled-components';
 
-
-
-
 export const CardContainer = styled.div`
     width: 250px;
     border: 1px solid rgb(166, 136, 54);
     border-radius: 8px;
     padding: 16px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
- 
+`;
+
+export const IconButton = styled.div`
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
 `;
 
 export const Image = styled.img`
@@ -29,14 +31,6 @@ export const Description = styled.p`
     margin-bottom: 8px;
 `;
 
-export const BuyButton = styled.button`
-    background-color: #ff5722;
-    color: white;
-    padding: 8px 16px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-`;
 export const OffersWeek = styled.div`
     width: 100%;
     margin: auto;

@@ -10,7 +10,7 @@ import {
     updateDoc,
 } from 'firebase/firestore';
 import { db } from '../../logic/firebase/config/firebaseconfig';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import ListItemHor from '../../components/ListItem/List';
 import IconAddR from '../../components/Icons/IconAddR';
 import Modal from '../../components/Modal';
@@ -21,6 +21,8 @@ import IconDelete from '../../components/Icons/IconDelete';
 import IconMotorbikeLine from '../../components/Icons/IconMotorbikeLine';
 import IconUserAdd from '../../components/Icons/IconUserAdd';
 import RegisterUser from '../../components/RegisrerUser/Index';
+import IconDeleteOutline from '../../components/Icons/IconDeleteOutline';
+import { getAuth, onAuthStateChanged } from 'firebase/auth';
 
 interface Motocycle {
     id?: string;
@@ -40,13 +42,31 @@ interface User {
     phone: string;
 }
 
-export default function ProductPage() {
-    const [motocycles, setMotocycles] = useState<Motocycle[]>([]);
-    const [users, setUsers] = useState<User[]>([]);
+export default function RegisterPage() {
+    const navigate = useNavigate();
+    const savedState = localStorage.getItem('estado');
+    const initialState = savedState ? JSON.parse(savedState) : true;
+    const [motocycles, setMotocycles] = useState<Motocycle[]>(
+        getStoredMotocycles() || []
+    );
+    const [users, setUsers] = useState<User[]>(getStoredUsers() || []);
     const [modalOpen, setModalOpen] = useState(false);
     const location = useLocation();
     const [isLoading, setIsLoading] = useState(false);
-    const [changeLayout, setChangeLayout] = useState<boolean>(true);
+    const [changeLayout, setChangeLayout] = useState<boolean>(initialState);
+
+    localStorage.setItem('estado', JSON.stringify(changeLayout));
+    localStorage.setItem('motocycles', JSON.stringify(motocycles));
+    localStorage.setItem('users', JSON.stringify(users));
+    function getStoredMotocycles() {
+      const storedMotocycles = localStorage.getItem('motocycles');
+      return storedMotocycles ? JSON.parse(storedMotocycles) : null;
+  }
+  function getStoredUsers() {
+      const storedMotocycles = localStorage.getItem('motocycles');
+      return storedMotocycles ? JSON.parse(storedMotocycles) : null;
+  }
+
 
     function handleChangeLayout() {
         setChangeLayout((prevLayout) => !prevLayout);
@@ -61,6 +81,7 @@ export default function ProductPage() {
         price: '',
     });
     const [selectedUser, setSelectedUser] = useState<User>({
+        id: '',
         imageUrl: '',
         name: '',
         email: '',
@@ -85,23 +106,6 @@ export default function ProductPage() {
                         [name]: value,
                     } as User)
             );
-        }
-    };
-
-    const handleDelete = async (motocycle: Motocycle) => {
-        if (window.confirm('Tem certeza que deseja excluir este item?')) {
-            try {
-                const motoCollection = collection(db, 'motocycles');
-                const docRef = doc(motoCollection, selectedMotorcycle.id);
-                await deleteDoc(docRef);
-
-                // setMotocycles((prevMotocycles) =>
-                //     prevMotocycles.filter((item) => item.id !== motocycle.id)
-                // );
-                window.location.reload();
-            } catch (error) {
-                console.error('Erro ao excluir produto:', error);
-            }
         }
     };
 
@@ -135,7 +139,6 @@ export default function ProductPage() {
                             : motocycle
                     )
                 );
-
                 handleCloseModal();
                 window.location.reload();
             } catch (error) {
@@ -158,13 +161,11 @@ export default function ProductPage() {
                     email,
                     phone,
                 });
-
                 setUsers((prevUsers) =>
                     prevUsers.map((user) =>
                         user.id === selectedUser.id ? selectedUser : user
                     )
                 );
-
                 handleCloseModal();
                 window.location.reload();
             } catch (error) {
@@ -198,6 +199,7 @@ export default function ProductPage() {
                 console.log('Produto adicionado com ID:', docRef.id);
 
                 handleCloseModal();
+                window.location.reload();
             } catch (error) {
                 console.error('Erro ao adicionar produto:', error);
             } finally {
@@ -218,8 +220,8 @@ export default function ProductPage() {
                     phone,
                 });
                 console.log('Produto adicionado com ID:', docRef.id);
-
                 handleCloseModal();
+                window.location.reload();
             } catch (error) {
                 console.error('Erro ao adicionar produto:', error);
             } finally {
@@ -227,8 +229,30 @@ export default function ProductPage() {
             }
         }
     };
+    const handleDelete = async (id: string, colecttion: string) => {
+        const confir = window.confirm('Deseja realmente excluir?');
+        if (confir) {
+            await deleteDoc(doc(db, colecttion, id));
+            window.location.reload();
+        }
+    };
 
     useEffect(() => {
+        const auth = getAuth();
+        onAuthStateChanged(auth, (user) => {
+            if (!user) {
+                navigate('/');
+            }
+            console.log(user);
+        });
+        const getMotocycles = async () => {
+            const data = await getDocs(collection(db, 'motocycles'));
+            const motocycleData = data.docs.map((doc) => ({
+                ...(doc.data() as Motocycle),
+                id: doc.id,
+            }));
+            setMotocycles(motocycleData);
+        };
         const getUsers = async () => {
             const data = await getDocs(collection(db, 'users'));
             const usersData = data.docs.map((doc) => ({
@@ -239,17 +263,6 @@ export default function ProductPage() {
             console.log(usersData);
         };
         getUsers();
-    }, []);
-
-    useEffect(() => {
-        const getMotocycles = async () => {
-            const data = await getDocs(collection(db, 'motocycles'));
-            const motocycleData = data.docs.map((doc) => ({
-                ...(doc.data() as Motocycle),
-                id: doc.id,
-            }));
-            setMotocycles(motocycleData);
-        };
         getMotocycles();
     }, []);
 
@@ -284,6 +297,7 @@ export default function ProductPage() {
         setModalOpen(false);
     };
 
+
     return (
         <DefaultLayout>
             <C.Title>Cadastro</C.Title>
@@ -295,6 +309,7 @@ export default function ProductPage() {
                     <IconUserAdd height={30} width={30} />
                 </C.DivButton>
             </C.GroupButtons>
+
             {changeLayout ? (
                 <div>
                     <C.DescContent>
@@ -303,37 +318,51 @@ export default function ProductPage() {
                             <IconAddR height={25} width={25} />
                         </C.IconButton>
                     </C.DescContent>
-                    {motocycles.map((motocycle) => (
-                        <ListItemHor
-                            key={motocycle.id}
-                            imageUrl={motocycle.imageUrl}
-                            name={motocycle.name}
-                            brand={motocycle.brand}
-                            displacement={motocycle.displacement}
-                            children={
-                                <C.GroupButtons>
-                                    <C.IconButton>
-                                        <IconBxEditAlt
-                                            height={25}
-                                            width={25}
-                                            onClick={() =>
-                                                handleEditProduct(motocycle)
-                                            }
-                                        />
-                                    </C.IconButton>
-                                    <C.IconButton>
-                                        <IconDelete
-                                            height={25}
-                                            width={25}
-                                            onClick={() =>
-                                                handleDelete(motocycle)
-                                            }
-                                        />
-                                    </C.IconButton>
-                                </C.GroupButtons>
-                            }
-                        />
-                    ))}
+                    {motocycles.length === 0 ? (
+                        <C.Container>
+                            <IconDeleteOutline height={45} width={45} />
+                            <C.Text>Nenhuma moto encontrada.</C.Text>
+                        </C.Container>
+                    ) : (
+                        <div>
+                            {motocycles.map((motocycle) => (
+                                <ListItemHor
+                                    key={motocycle.id}
+                                    imageUrl={motocycle.imageUrl}
+                                    name={motocycle.name}
+                                    brand={motocycle.brand}
+                                    displacement={motocycle.displacement}
+                                    children={
+                                        <C.GroupButtons>
+                                            <C.IconButton>
+                                                <IconBxEditAlt
+                                                    height={25}
+                                                    width={25}
+                                                    onClick={() =>
+                                                        handleEditProduct(
+                                                            motocycle
+                                                        )
+                                                    }
+                                                />
+                                            </C.IconButton>
+                                            <C.IconButton>
+                                                <IconDelete
+                                                    height={25}
+                                                    width={25}
+                                                    onClick={async () => {
+                                                        await handleDelete(
+                                                            motocycle?.id!,
+                                                            'motocycles'
+                                                        );
+                                                    }}
+                                                />
+                                            </C.IconButton>
+                                        </C.GroupButtons>
+                                    }
+                                />
+                            ))}
+                        </div>
+                    )}
                 </div>
             ) : (
                 <div>
@@ -343,41 +372,54 @@ export default function ProductPage() {
                             <IconAddR height={25} width={25} />
                         </C.IconButton>
                     </C.DescContent>
-                    {users.map((user) => (
-                        <RegisterUser
-                            key={user.id}
-                            imageUrl={user.imageUrl}
-                            name={user.name}
-                            email={user.email}
-                            phone={user.phone}
-                            onAdd={function (): void {
-                                throw new Error('Function not implemented.');
-                            }}
-                            children={
-                                <C.GroupButtons>
-                                    <C.IconButton>
-                                        <IconBxEditAlt
-                                            height={25}
-                                            width={25}
-                                            onClick={() => {
-                                                handleEditUser(user);
-                                            }}
-                                        />
-                                    </C.IconButton>
-                                    <C.IconButton>
-                                        <IconDelete
-                                            height={25}
-                                            width={25}
-                                            onClick={
-                                                () => {}
-                                                // handleDelete(motocycle)
-                                            }
-                                        />
-                                    </C.IconButton>
-                                </C.GroupButtons>
-                            }
-                        />
-                    ))}
+                    {users.length === 0 ? (
+                        <C.Container>
+                            <IconDeleteOutline height={45} width={45} />
+                            <C.Text>Nenhum usuário encontrado.</C.Text>
+                        </C.Container>
+                    ) : (
+                        <div>
+                            {users.map((user) => (
+                                <RegisterUser
+                                    key={user.id}
+                                    imageUrl={user.imageUrl}
+                                    name={user.name}
+                                    email={user.email}
+                                    phone={user.phone}
+                                    onAdd={function (): void {
+                                        throw new Error(
+                                            'Function not implemented.'
+                                        );
+                                    }}
+                                    children={
+                                        <C.GroupButtons>
+                                            <C.IconButton>
+                                                <IconBxEditAlt
+                                                    height={25}
+                                                    width={25}
+                                                    onClick={() => {
+                                                        handleEditUser(user);
+                                                    }}
+                                                />
+                                            </C.IconButton>
+                                            <C.IconButton>
+                                                <IconDelete
+                                                    height={25}
+                                                    width={25}
+                                                    onClick={async () => {
+                                                        await handleDelete(
+                                                            user?.id!,
+                                                            'users'
+                                                        );
+                                                    }}
+                                                />
+                                            </C.IconButton>
+                                        </C.GroupButtons>
+                                    }
+                                />
+                            ))}
+                        </div>
+                    )}
                 </div>
             )}
 

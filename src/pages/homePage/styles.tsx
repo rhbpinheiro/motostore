@@ -13,6 +13,12 @@ export const ContentContainer = styled.div`
     flex-direction: column;
     align-items: center;
 `;
+
+export const Text = styled.h3`
+    font-size: 15px;
+    color: rgb(166, 136, 54);
+`;
+
 export const MotorcycleListContainer = styled.div`
     display: flex;
     flex-wrap: wrap;

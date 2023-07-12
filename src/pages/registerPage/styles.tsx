@@ -19,6 +19,10 @@ export const Title = styled.h2`
     font-size: 35;
     color: rgb(166, 136, 54);
 `;
+export const Text = styled.h3`
+    font-size: 15px;
+    color: rgb(166, 136, 54);
+`;
 
 export const IconButton = styled.div`
     width: 30px;
@@ -38,7 +42,6 @@ export const ModalOverlay = styled.div`
     align-items: center;
 `;
 
-
 export const ButtonModal = styled(Button)`
     background-color: rgb(166, 136, 54);
 `;
@@ -49,32 +52,31 @@ export const GroupButtons = styled.div`
     justify-content: space-between;
 `;
 
-export const RegistrationOptions = styled.div`
-
-`;
+export const RegistrationOptions = styled.div``;
 
 export const DivButton = styled.div`
-  display: flex;
-  width: 40px;
-  height: 30px;
-  margin-right: 10px;
-  padding: 10px;
-  border: 1px solid rgb(166, 136, 54);
-  border-radius: 10px;
-  cursor: pointer;
+    display: flex;
+    width: 40px;
+    height: 30px;
+    margin-right: 10px;
+    padding: 10px;
+    border: 1px solid rgb(243, 217, 147);
+    border-radius: 10px;
+    cursor: pointer;
+    justify-content: center;
+    align-items: center;
 
-  &:hover {
-    background-color:  rgb(147, 183, 146);
-  }
-`
-export const ModalContent = styled.div`
-  background-color: white;
-  display: flex;
-  flex-direction: column;
-  justify-content:space-between;
-  width: 400px;
-  height: 350px;
-  padding: 20px;
-  border-radius: 15px;
+    &:hover {
+        background-color: rgb(240, 219, 164);
+    }
 `;
-
+export const ModalContent = styled.div`
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 400px;
+    height: 350px;
+    padding: 20px;
+    border-radius: 15px;
+`;

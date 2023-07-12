@@ -2,7 +2,6 @@ import React from 'react';
 import * as C from './style';
 import ImageFake from '../../assets/sem-imagem7.jpg';
 
-
 interface ListItemProps {
     imageUrl: string;
     name: string;
@@ -11,6 +10,8 @@ interface ListItemProps {
     description: string;
     price: string;
     onBuy: () => void;
+    children: any;
+    loagind: boolean;
 }
 
 export default function ListItem({
@@ -21,6 +22,8 @@ export default function ListItem({
     description,
     price,
     onBuy,
+    children,
+    loagind
 }: ListItemProps) {
     return (
         <C.ItemContainer>
@@ -31,7 +34,10 @@ export default function ListItem({
                 <C.Description>Cilindrada: {displacement}</C.Description>
                 <C.Description>Informações: {description}</C.Description>
                 <C.Description>Preço: R$ {price}</C.Description>
-                <C.BuyButton onClick={onBuy}>Vender</C.BuyButton>
+                {children}
+                <C.BuyButton onClick={onBuy}>
+                 {loagind ? 'Enviando...' : 'Vender'} 
+                  </C.BuyButton>
             </C.ColInfo>
         </C.ItemContainer>
     );

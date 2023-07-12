@@ -1,11 +1,11 @@
 import * as C from './styles';
-import ImagemFake from '../../../assets/sem-imagem7.jpg'
+import ImagemFake from '../../../assets/sem-imagem7.jpg';
 interface ListItemProps {
     id?: string;
     imageUrl: string;
     name: string;
-    brand: string;
-    displacement: string;
+    brand?: string;
+    displacement?: string;
     description?: string;
     children?: any;
 }
