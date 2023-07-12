@@ -31,14 +31,6 @@ export default function DefaultLayout({ children }: LayoutContainerProps) {
         <C.LayoutContainer>
             <C.Header>
                 <C.ImageLogo src={Logo} alt="Logo" />
-                <C.Menu>
-                    <C.MenuItem to="/home">Motos</C.MenuItem>
-                    <C.MenuItem to="/register">Cadastro</C.MenuItem>
-                    <C.MenuItem to="/sales">Vendas</C.MenuItem>
-                    <C.MenuItem to="/" onClick={handleLogout}>
-                        Sair
-                    </C.MenuItem>
-                </C.Menu>
                 <C.MenuIcon onClick={handleToggleMenu}>
                     <IconMenu width={30} height={30} />
                 </C.MenuIcon>
@@ -50,6 +42,15 @@ export default function DefaultLayout({ children }: LayoutContainerProps) {
                         Sair
                     </C.MenuItemIcon>
                 </C.DivMenu>
+                <C.Menu>
+                    <C.MenuItem to="/home">Motos</C.MenuItem>
+                    <C.MenuItem to="/register">Cadastro</C.MenuItem>
+                    <C.MenuItem to="/sales">Vendas</C.MenuItem>
+                    <C.MenuItem to="/" onClick={handleLogout}>
+                        Sair
+                    </C.MenuItem>
+                </C.Menu>
+              
             </C.Header>
             <C.Content>{children}</C.Content>
             <C.Footer>
