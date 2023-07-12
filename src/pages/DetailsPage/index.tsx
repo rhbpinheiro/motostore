@@ -26,7 +26,7 @@ interface Sale {
     brand: string;
     date: Date;
     client: string;
-    amount: number;
+    price: string;
 }
 
 export default function DetailsPage() {
@@ -36,6 +36,7 @@ export default function DetailsPage() {
     const motocycle = location.state?.motorcycle as Motocycle;
     const [clientName, setclientName] = useState('');
     const [saleAmount, setSaleAmount] = useState(0);
+    const [total, setTotal] = useState(0);
     const [isLoading, setIsLoading] = useState(false);
     const auth = getAuth();
     const currentDate = new Date(Date.now());
@@ -56,12 +57,12 @@ export default function DetailsPage() {
         const sale: Sale = {
             date: new Date(),
             client: clientName,
-            amount: saleAmount,
             imageUrl: motocycle.imageUrl,
             name: motocycle.name,
             brand: motocycle.brand,
+            price: motocycle.price,
         };
-        if (sale.amount > 0 && sale.client !== '') {
+        if (sale.client !== '') {
             const conf = window.confirm('Deseja Finalizar a venda?');
             if (conf) {
                 try {
@@ -74,14 +75,15 @@ export default function DetailsPage() {
                 } catch (error) {
                     console.error('Error adding sale: ', error);
                 } finally {
+                    navigate('/home');
                     setIsLoading(false);
                 }
             }
         } else {
             window.alert('Preencha os todos os campos antes de confirmar.');
         }
-        navigate('/');
     };
+  
 
     useEffect(() => {
         onAuthStateChanged(auth, (user) => {
@@ -94,48 +96,40 @@ export default function DetailsPage() {
 
     return (
         <DefaultLayout>
-            <ListItem
-                key={motocycle.id}
-                imageUrl={motocycle.imageUrl}
-                name={motocycle.name}
-                brand={motocycle.brand}
-                displacement={motocycle.displacement}
-                description={motocycle.description}
-                price={motocycle.price}
-                onBuy={handleBuy}
-                loagind={isLoading}
-            >
-                <>
-                    <C.DivInputSeller>
-                        <C.LabelSeller htmlFor="sellerInput">
-                            Cliente:
-                        </C.LabelSeller>
-                        <Input
-                            type="text"
-                            id="sellerInput"
-                            value={clientName}
-                            onChange={(
-                                e: React.ChangeEvent<HTMLInputElement>
-                            ) => setclientName(e.target.value)}
-                        />
-                    </C.DivInputSeller>
-                    <C.DivInputAmount>
-                        <C.LabelSellerAmount htmlFor="amountInput">
-                            Quantidade:
-                        </C.LabelSellerAmount>
-                        <Input
-                            type="number"
-                            id="amountInput"
-                            value={saleAmount}
-                            onChange={(
-                                e: React.ChangeEvent<HTMLInputElement>
-                            ) => setSaleAmount(parseInt(e.target.value))}
-                        />
-                    </C.DivInputAmount>
+            <C.Container>
+                <ListItem
+                    key={motocycle.id}
+                    imageUrl={motocycle.imageUrl}
+                    name={motocycle.name}
+                    brand={motocycle.brand}
+                    displacement={motocycle.displacement}
+                    description={motocycle.description}
+                    price={parseInt(motocycle.price).toFixed(2)}
+                    onBuy={handleBuy}
+                    loagind={isLoading}
+                >
+                    <>
+                        <C.DivInputSeller>
+                            <C.LabelSeller htmlFor="sellerInput">
+                                Cliente:
+                            </C.LabelSeller>
+                            <Input
+                                type="text"
+                                id="sellerInput"
+                                placeholder="Digite o nome do cliente"
+                                value={clientName}
+                                onChange={(
+                                    e: React.ChangeEvent<HTMLInputElement>
+                                ) => setclientName(e.target.value)}
+                            />
+                        </C.DivInputSeller>
 
-                    <C.Description>Data: {formattedDate}</C.Description>
-                </>
-            </ListItem>
+                        <C.DescriptionData>
+                            Data: {formattedDate}
+                        </C.DescriptionData>
+                    </>
+                </ListItem>
+            </C.Container>
         </DefaultLayout>
     );
 }

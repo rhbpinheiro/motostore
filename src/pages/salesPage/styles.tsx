@@ -3,12 +3,14 @@ import styled from "styled-components"
 export const MotorcycleListContainer = styled.div`
     display: flex;
     flex-wrap: wrap;
-
     gap: 30px;
     justify-content: center;
     align-items: flex-start;
 `;
 
+export const DivTitle = styled.div`
+  display: flex;
+`
 
 export const Text = styled.h3`
     font-size: 15px;

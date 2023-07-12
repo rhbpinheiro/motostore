@@ -1,6 +1,10 @@
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
+interface DivMenuProps {
+    open: boolean;
+}
+
 export const LayoutContainer = styled.div`
     display: flex;
     flex-direction: column;
@@ -18,6 +22,9 @@ export const Header = styled.header`
     justify-content: space-between;
     align-items: center;
     z-index: 999;
+    @media (max-width: 768px) {
+        height: 70px;
+    }
 `;
 
 export const ImageLogo = styled.img`
@@ -29,17 +36,29 @@ export const ImageLogo = styled.img`
     }
 `;
 export const ImageFooter = styled.img`
-    width: 100px;
-    height: 30px;
+    width: 200px;
+    height: 50px;
     @media (max-width: 768px) {
-        width: 80px;
-        height: 20px;
+        width: 120px;
+        height: 40px;
     }
 `;
 
 export const Menu = styled.nav`
     display: flex;
     justify-content: space-around;
+    @media (max-width: 768px) {
+        display: none;
+    }
+`;
+export const MenuIcon = styled.nav`
+    display: flex;
+    justify-content: space-around;
+    display: none;
+    cursor: pointer;
+    @media (max-width: 768px) {
+        display: block;
+    }
 `;
 
 export const MenuItem = styled(Link)`
@@ -63,4 +82,24 @@ export const Footer = styled.footer`
     display: flex;
     justify-content: center;
     align-items: center;
+`;
+
+export const DivMenu = styled.div<DivMenuProps>`
+    display: ${(props) => (props.open ? 'flex' : 'none')};
+    flex-direction: column;
+    background-color: #f2f2f2;
+    padding: 10px;
+    position: absolute;
+    top: 40px;
+    right: 0;
+`;
+
+export const MenuItemIcon = styled(Link)`
+    padding: 8px;
+    cursor: pointer;
+    text-decoration: none;
+    margin-left: 15px;
+    color: rgb(166, 136, 54);
+    font-weight: 500;
+    font-size: 18px;
 `;

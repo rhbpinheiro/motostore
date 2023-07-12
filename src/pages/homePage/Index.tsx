@@ -14,6 +14,7 @@ import IconDelete from '../../components/Icons/IconDelete';
 import IconDeleteOutline from '../../components/Icons/IconDeleteOutline';
 import { Loading } from '../loading/styles';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
+import IconBxDetail from '../../components/Icons/IconBxDetail';
 
 interface Motocycle {
     id: string;
@@ -107,6 +108,7 @@ export default function HomePage() {
                                     name={motocycle.name}
                                     brand={motocycle.brand}
                                     displacement={motocycle.displacement}
+                                    price={motocycle.price}
                                     onBuy={() => handleDetails(motocycle)}
                                 />
                             ))}
@@ -114,15 +116,21 @@ export default function HomePage() {
                     ) : (
                         <div>
                             {motocycles.map((motocycle) => (
-                                <ListItemHor
-                                    key={motocycle.id}
-                                    id={motocycle.id}
-                                    imageUrl={motocycle.imageUrl}
-                                    name={motocycle.name}
-                                    brand={motocycle.brand}
-                                    displacement={motocycle.displacement}
-                                    children={<div></div>}
-                                />
+                                <C.DivListContainer>
+                                    <ListItemHor
+                                        key={motocycle.id}
+                                        id={motocycle.id}
+                                        imageUrl={motocycle.imageUrl}
+                                        name={motocycle.name}
+                                        brand={motocycle.brand}
+                                        displacement={motocycle.displacement}
+                                        children={
+                                        <C.IconButton onClick={() => handleDetails(motocycle)}>
+                                          <IconBxDetail width={35} height={35} />
+                                      </C.IconButton>
+                                        }
+                                    />
+                                </C.DivListContainer>
                             ))}
                         </div>
                     )}

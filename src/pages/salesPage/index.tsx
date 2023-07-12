@@ -8,6 +8,7 @@ import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import { db } from '../../logic/firebase/config/firebaseconfig';
 import IconDeleteOutline from '../../components/Icons/IconDeleteOutline';
 import ListItemHor from '../../components/ListItem/List';
+import { Timestamp } from '@firebase/firestore';
 
 interface Motocycle {
     id: string;
@@ -27,7 +28,9 @@ interface Sale {
     date: Date;
     client: string;
     amount: number;
+    price: string;
     motocycle: Motocycle;
+    total: string;
 }
 
 export default function SalesPage() {
@@ -39,15 +42,30 @@ export default function SalesPage() {
         const storedSales = localStorage.getItem('sales');
         return storedSales ? JSON.parse(storedSales) : null;
     }
-    const currentDate = new Date(Date.now());
-    const formattedDate = `${currentDate
-        .getDate()
-        .toString()
-        .padStart(2, '0')}/${(currentDate.getMonth() + 1)
-        .toString()
-        .padStart(2, '0')}/${currentDate.getFullYear()}`;
+    function timestampToDate(timestamp: any) {
+        const seconds = timestamp.seconds;
+        const milliseconds = timestamp.nanoseconds / 1000000;
+        const millisecondsTotal = seconds * 1000 + milliseconds;
+        return new Date(millisecondsTotal);
+    }
+    const formattedSales = sales.map((sale) => {
+        const formattedDate = timestampToDate(sale.date).toLocaleDateString(
+            'pt-BR'
+        );
+        return {
+            ...sale,
+            formattedDate,
+        };
+    });
 
     useEffect(() => {
+        const formattedSales = sales.map((sale) => {
+            const formattedDate = sale.date;
+            return {
+                ...sale,
+                formattedDate,
+            };
+        });
         const auth = getAuth();
         onAuthStateChanged(auth, (user) => {
             if (!user) {
@@ -67,16 +85,18 @@ export default function SalesPage() {
     }, []);
     return (
         <DefaultLayout>
-            <C.Titulo>Lista de Vendas</C.Titulo>
+            <C.DivTitle>
+                <C.Titulo>Lista de Vendas</C.Titulo>
+            </C.DivTitle>
             {sales.length === 0 ? (
                 <C.Container>
                     <IconDeleteOutline height={45} width={45} />
                     <C.Text>Nenhuma venda encontrada</C.Text>
                 </C.Container>
             ) : (
-                <div>
+                <C.Container>
                     <C.MotorcycleListContainer>
-                        {sales.map((sale) => (
+                        {formattedSales.map((sale) => (
                             <ListItemHor
                                 key={sale.id}
                                 id={sale.id}
@@ -89,17 +109,17 @@ export default function SalesPage() {
                                             Cliente: {sale.client}
                                         </C.Description>
                                         <C.Description>
-                                            Quantidade: {sale.amount}
+                                            Data: {sale.formattedDate}
                                         </C.Description>
-                                        {/* <C.Description>
-                                            Data: {sale.date}
-                                        </C.Description> */}
+                                        <C.Description>
+                                            Preço: R$ {parseInt(sale.price).toFixed(2)}
+                                        </C.Description>
                                     </>
                                 }
                             />
                         ))}
                     </C.MotorcycleListContainer>
-                </div>
+                </C.Container>
             )}
         </DefaultLayout>
     );

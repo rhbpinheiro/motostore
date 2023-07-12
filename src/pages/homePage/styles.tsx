@@ -7,6 +7,12 @@ export const Container = styled.div`
     width: 100%;
 `;
 
+export const DivListContainer = styled.div`
+    @media (max-width: 768px) {
+        display: none;
+    }
+`;
+
 export const ContentContainer = styled.div`
     max-width: 1000px;
     display: flex;
@@ -41,10 +47,19 @@ export const ToogleLayout = styled.div`
     align-items: center;
     justify-content: center;
     cursor: pointer;
+    @media (max-width: 768px) {
+        display: none;
+    }
 `;
 
 export const Titulo = styled.h2`
     font-size: 35;
     color: rgb(166, 136, 54);
     text-align: center;
+`;
+
+export const IconButton = styled.div`
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
 `;

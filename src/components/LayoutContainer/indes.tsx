@@ -4,12 +4,20 @@ import MotoStore from '../../assets/motostore.png';
 import { signOut } from 'firebase/auth';
 import { auth } from '../../logic/firebase/config/firebaseconfig';
 import { useNavigate } from 'react-router-dom';
+import IconMenu from '../Icons/IconMenu';
+import { useState } from 'react';
 
 interface LayoutContainerProps {
     children: any;
 }
 
 export default function DefaultLayout({ children }: LayoutContainerProps) {
+    const [menuOpen, setMenuOpen] = useState(false);
+
+    const handleToggleMenu = () => {
+        setMenuOpen(!menuOpen);
+    };
+
     const navigate = useNavigate();
     async function handleLogout() {
         try {
@@ -31,6 +39,17 @@ export default function DefaultLayout({ children }: LayoutContainerProps) {
                         Sair
                     </C.MenuItem>
                 </C.Menu>
+                <C.MenuIcon onClick={handleToggleMenu}>
+                    <IconMenu width={30} height={30} />
+                </C.MenuIcon>
+                <C.DivMenu open={menuOpen}>
+                    <C.MenuItemIcon to="/home">Motos</C.MenuItemIcon>
+                    <C.MenuItemIcon to="/register">Cadastro</C.MenuItemIcon>
+                    <C.MenuItemIcon to="/sales">Vendas</C.MenuItemIcon>
+                    <C.MenuItemIcon to="/" onClick={handleLogout}>
+                        Sair
+                    </C.MenuItemIcon>
+                </C.DivMenu>
             </C.Header>
             <C.Content>{children}</C.Content>
             <C.Footer>

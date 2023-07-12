@@ -25,7 +25,7 @@ export default function RegisterUser({
     return (
         <C.ListItemContainer key={id}>
             <C.Image
-                src={/*(imageUrl === null || imageUrl === '' ) ? */ ImagemFake}
+                src={(imageUrl === null || imageUrl === '' ) ? ImagemFake : imageUrl}
                 alt="Avatar"
             />
             <C.Title>{name}</C.Title>

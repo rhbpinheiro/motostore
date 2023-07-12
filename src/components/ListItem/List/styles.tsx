@@ -5,12 +5,15 @@ export const ListItemContainer = styled.div`
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    height: 80px;
     width: 100%;
     padding: 16px;
     border: 1px solid rgb(166, 136, 54);
     border-radius: 15px;
     margin-bottom: 8px;
+    @media (max-width: 768px) {
+        flex-direction: column;
+        width: 70%;
+    }
 `;
 
 export const Image = styled.img`

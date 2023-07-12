@@ -8,6 +8,7 @@ interface Motocycle {
     name: string;
     brand: string;
     displacement: string;
+    price: number;
     description?: string;
     onBuy?: () => void;
 }
@@ -19,6 +20,7 @@ export default function MotorcycleCard({
     brand,
     displacement,
     description,
+    price,
     onBuy,
 }: Motocycle) {
     return (
@@ -27,6 +29,7 @@ export default function MotorcycleCard({
             <C.Title>{name}</C.Title>
             <C.Description>Marca: {brand}</C.Description>
             <C.Description>Cilindrada: {displacement}</C.Description>
+            <C.Description>Preço: {price}</C.Description>
             <C.IconButton onClick={onBuy}>
                 <IconBxDetail width={35} height={35} />
             </C.IconButton>

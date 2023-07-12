@@ -7,6 +7,9 @@ export const ItemContainer = styled.li`
     padding: 8px;
     border-bottom: 1px solid gray;
     margin-top: 90px;
+    @media (max-width: 768px) {
+        flex-direction: column;
+    }
 `;
 
 export const ColInfo = styled.div`

@@ -59,14 +59,13 @@ export default function RegisterPage() {
     localStorage.setItem('motocycles', JSON.stringify(motocycles));
     localStorage.setItem('users', JSON.stringify(users));
     function getStoredMotocycles() {
-      const storedMotocycles = localStorage.getItem('motocycles');
-      return storedMotocycles ? JSON.parse(storedMotocycles) : null;
-  }
-  function getStoredUsers() {
-      const storedMotocycles = localStorage.getItem('motocycles');
-      return storedMotocycles ? JSON.parse(storedMotocycles) : null;
-  }
-
+        const storedMotocycles = localStorage.getItem('motocycles');
+        return storedMotocycles ? JSON.parse(storedMotocycles) : null;
+    }
+    function getStoredUsers() {
+        const storedMotocycles = localStorage.getItem('motocycles');
+        return storedMotocycles ? JSON.parse(storedMotocycles) : null;
+    }
 
     function handleChangeLayout() {
         setChangeLayout((prevLayout) => !prevLayout);
@@ -110,6 +109,17 @@ export default function RegisterPage() {
     };
 
     const handleUpdateMotorcycle = async () => {
+        if (
+            selectedMotorcycle.brand === '' ||
+            selectedMotorcycle.description === '' ||
+            selectedMotorcycle.displacement === '' ||
+            selectedMotorcycle.imageUrl === '' ||
+            selectedMotorcycle.name === '' ||
+            selectedMotorcycle.price === ''
+        ) {
+            window.alert('Preencha todos os campos.');
+            return;
+        }
         if (selectedMotorcycle) {
             try {
                 setIsLoading(true);
@@ -146,9 +156,21 @@ export default function RegisterPage() {
             } finally {
                 setIsLoading(false);
             }
+        } else {
+            window.alert('Preencha todos os campos.');
+            return;
         }
     };
     const handleUpdateUser = async () => {
+        if (
+            selectedUser.imageUrl === '' ||
+            selectedUser.name === '' ||
+            selectedUser.email === '' ||
+            selectedUser.phone === ''
+        ) {
+            window.alert('Preencha todos os campos.');
+            return;
+        }
         if (selectedUser) {
             try {
                 setIsLoading(true);
@@ -177,6 +199,17 @@ export default function RegisterPage() {
     };
 
     const handleAddMotorcycle = async () => {
+        if (
+            selectedMotorcycle.brand === '' ||
+            selectedMotorcycle.description === '' ||
+            selectedMotorcycle.displacement === '' ||
+            selectedMotorcycle.imageUrl === '' ||
+            selectedMotorcycle.name === '' ||
+            selectedMotorcycle.price === ''
+        ) {
+            window.alert('Preencha todos os campos.');
+            return;
+        }
         if (selectedMotorcycle) {
             try {
                 setIsLoading(true);
@@ -209,6 +242,15 @@ export default function RegisterPage() {
     };
 
     const handleAddUser = async () => {
+        if (
+            selectedUser.imageUrl === '' ||
+            selectedUser.name === '' ||
+            selectedUser.email === '' ||
+            selectedUser.phone === ''
+        ) {
+            window.alert('Preencha todos os campos.');
+            return;
+        }
         if (selectedUser) {
             try {
                 setIsLoading(true);
@@ -297,7 +339,6 @@ export default function RegisterPage() {
         setModalOpen(false);
     };
 
-
     return (
         <DefaultLayout>
             <C.Title>Cadastro</C.Title>
@@ -324,7 +365,7 @@ export default function RegisterPage() {
                             <C.Text>Nenhuma moto encontrada.</C.Text>
                         </C.Container>
                     ) : (
-                        <div>
+                        <C.Container>
                             {motocycles.map((motocycle) => (
                                 <ListItemHor
                                     key={motocycle.id}
@@ -361,7 +402,7 @@ export default function RegisterPage() {
                                     }
                                 />
                             ))}
-                        </div>
+                        </C.Container>
                     )}
                 </div>
             ) : (
@@ -378,7 +419,7 @@ export default function RegisterPage() {
                             <C.Text>Nenhum usuário encontrado.</C.Text>
                         </C.Container>
                     ) : (
-                        <div>
+                        <C.Container>
                             {users.map((user) => (
                                 <RegisterUser
                                     key={user.id}
@@ -418,7 +459,7 @@ export default function RegisterPage() {
                                     }
                                 />
                             ))}
-                        </div>
+                        </C.Container>
                     )}
                 </div>
             )}
