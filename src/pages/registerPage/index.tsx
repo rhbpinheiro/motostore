@@ -44,8 +44,7 @@ interface User {
 
 export default function RegisterPage() {
     const navigate = useNavigate();
-    const savedState = localStorage.getItem('estado');
-    const initialState = savedState ? JSON.parse(savedState) : true;
+
     const [motocycles, setMotocycles] = useState<Motocycle[]>(
         getStoredMotocycles() || []
     );
@@ -53,9 +52,9 @@ export default function RegisterPage() {
     const [modalOpen, setModalOpen] = useState(false);
     const location = useLocation();
     const [isLoading, setIsLoading] = useState(false);
-    const [changeLayout, setChangeLayout] = useState<boolean>(initialState);
+    const [changeLayoutMoto, setChangeLayoutMoto] = useState<boolean>(false);
+    const [changeLayoutUser, setChangeLayoutUser] = useState<boolean>(false);
 
-    localStorage.setItem('estado', JSON.stringify(changeLayout));
     localStorage.setItem('motocycles', JSON.stringify(motocycles));
     localStorage.setItem('users', JSON.stringify(users));
     function getStoredMotocycles() {
@@ -63,12 +62,21 @@ export default function RegisterPage() {
         return storedMotocycles ? JSON.parse(storedMotocycles) : null;
     }
     function getStoredUsers() {
-        const storedMotocycles = localStorage.getItem('motocycles');
+        const storedMotocycles = localStorage.getItem('users');
         return storedMotocycles ? JSON.parse(storedMotocycles) : null;
     }
 
-    function handleChangeLayout() {
-        setChangeLayout((prevLayout) => !prevLayout);
+    function handleChangeLayoutMoto() {
+        if (!changeLayoutMoto) {
+            setChangeLayoutMoto(true);
+            setChangeLayoutUser(false);
+        }
+    }
+    function handleChangeLayoutUser() {
+        if (!changeLayoutUser) {
+            setChangeLayoutUser(true);
+            setChangeLayoutMoto(false);
+        }
     }
 
     const [selectedMotorcycle, setSelectedMotorcycle] = useState<Motocycle>({
@@ -89,7 +97,7 @@ export default function RegisterPage() {
 
     const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = event.target;
-        if (changeLayout) {
+        if (changeLayoutMoto) {
             setSelectedMotorcycle(
                 (prevMotorcycle) =>
                     ({
@@ -343,15 +351,15 @@ export default function RegisterPage() {
         <DefaultLayout>
             <C.Title>Cadastro</C.Title>
             <C.GroupButtons>
-                <C.DivButton onClick={handleChangeLayout}>
+                <C.DivButton onClick={handleChangeLayoutMoto}>
                     <IconMotorbikeLine height={30} width={30} />
                 </C.DivButton>
-                <C.DivButton onClick={handleChangeLayout}>
+                <C.DivButton onClick={handleChangeLayoutUser}>
                     <IconUserAdd height={30} width={30} />
                 </C.DivButton>
             </C.GroupButtons>
 
-            {changeLayout ? (
+            {changeLayoutMoto ? (
                 <div>
                     <C.DescContent>
                         <C.Title>Lista de Motos</C.Title>
@@ -465,7 +473,7 @@ export default function RegisterPage() {
             )}
 
             <Modal open={modalOpen} onClose={handleCloseModal}>
-                {changeLayout ? (
+                {changeLayoutMoto ? (
                     <C.ModalContent onClick={(e: any) => e.stopPropagation()}>
                         <Input
                             type="text"

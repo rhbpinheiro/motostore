@@ -5,6 +5,8 @@ import { useEffect, useState } from 'react';
 import { auth } from '../../logic/firebase/config/firebaseconfig';
 import Loading from '../loading/Loading';
 import { useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2';
+import { getAuth } from 'firebase/auth';
 
 export default function Login() {
     const [email, setEmail] = useState('');
@@ -13,21 +15,22 @@ export default function Login() {
     const [signInWithEmailAndPassword, user, loading, error] =
         useSignInWithEmailAndPassword(auth);
 
-        useEffect(() => {
-          const unsubscribe = auth.onAuthStateChanged((user) => {
-              if (user) {
-                  navigate('/home');
-              } else {
-                  navigate('/');
-              }
-          });
-  
-          return () => unsubscribe();
-      }, [navigate]);
+    useEffect(() => {
+        const unsubscribe = auth.onAuthStateChanged((user) => {
+            if (user) {
+                navigate('/home');
+            } else {
+                navigate('/');
+            }
+        });
 
-    function handleSingIn(e: any) {
+        return () => unsubscribe();
+    }, [navigate]);
+
+    async function handleSignIn(e: any) {
         e.preventDefault();
-        signInWithEmailAndPassword(email, password);
+
+        await signInWithEmailAndPassword(email, password);
     }
 
     if (loading) {
@@ -56,7 +59,7 @@ export default function Login() {
                             setPassword(e.target.value)
                         }
                     />
-                    <C.Button type="submit" onClick={handleSingIn}>
+                    <C.Button type="submit" onClick={handleSignIn}>
                         Login
                     </C.Button>
                     <C.Register>
