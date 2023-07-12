@@ -112,7 +112,7 @@ export default function HomePage() {
                     ) : (
                         <div>
                             {motocycles.map((motocycle) => (
-                                <C.DivListContainer>
+                                <C.Container>
                                     <ListItemHor
                                         key={motocycle.id}
                                         id={motocycle.id}
@@ -126,7 +126,7 @@ export default function HomePage() {
                                       </C.IconButton>
                                         }
                                     />
-                                </C.DivListContainer>
+                                </C.Container>
                             ))}
                         </div>
                     )}

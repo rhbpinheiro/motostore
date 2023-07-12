@@ -8,9 +8,9 @@ export const Container = styled.div`
 `;
 
 export const DivListContainer = styled.div`
-    @media (max-width: 768px) {
+    /* @media (max-width: 768px) {
         display: none;
-    }
+    } */
 `;
 
 export const ContentContainer = styled.div`
@@ -47,9 +47,9 @@ export const ToogleLayout = styled.div`
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    @media (max-width: 768px) {
+    /* @media (max-width: 768px) {
         display: none;
-    }
+    } */
 `;
 
 export const Titulo = styled.h2`
