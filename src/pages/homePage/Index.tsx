@@ -8,11 +8,7 @@ import IconUnorderedList from '../../components/Icons/IconUnorderedList';
 import IconGrid3x3Gap from '../../components/Icons/IconGrid3x3Gap';
 import ListItemHor from '../../components/ListItem/List';
 import DefaultLayout from '../../components/LayoutContainer/indes';
-import { Button } from '../login/styles';
-import IconBxEditAlt from '../../components/Icons/IconBxEditAlt';
-import IconDelete from '../../components/Icons/IconDelete';
 import IconDeleteOutline from '../../components/Icons/IconDeleteOutline';
-import { Loading } from '../loading/styles';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import IconBxDetail from '../../components/Icons/IconBxDetail';
 

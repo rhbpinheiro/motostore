@@ -6,7 +6,7 @@ import { auth } from '../../logic/firebase/config/firebaseconfig';
 import Loading from '../loading/Loading';
 import { useNavigate } from 'react-router-dom';
 
-export function Register() {
+export default function Register() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [confPassword, setConfPassword] = useState('');

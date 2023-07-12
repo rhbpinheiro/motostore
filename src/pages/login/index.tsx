@@ -5,9 +5,8 @@ import { useEffect, useState } from 'react';
 import { auth } from '../../logic/firebase/config/firebaseconfig';
 import Loading from '../loading/Loading';
 import { useNavigate } from 'react-router-dom';
-import { getAuth } from 'firebase/auth';
 
-export function Login() {
+export default function Login() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const navigate = useNavigate();

@@ -1,6 +1,6 @@
 import * as C from './style';
 import { useNavigate } from 'react-router';
-export const NotFound = () => {
+export default function NotFound(){
     const navigate = useNavigate();
     function back() {
         navigate('/');

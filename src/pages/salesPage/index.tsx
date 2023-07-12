@@ -1,14 +1,12 @@
 import * as C from './styles';
 import { useEffect, useState } from 'react';
-import ListItem from '../../components/List';
 import { collection, getDocs } from 'firebase/firestore';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import DefaultLayout from '../../components/LayoutContainer/indes';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import { db } from '../../logic/firebase/config/firebaseconfig';
 import IconDeleteOutline from '../../components/Icons/IconDeleteOutline';
 import ListItemHor from '../../components/ListItem/List';
-import { Timestamp } from '@firebase/firestore';
 
 interface Motocycle {
     id: string;

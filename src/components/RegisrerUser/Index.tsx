@@ -1,5 +1,3 @@
-import IconAddR from '../Icons/IconAddR';
-import ListItemHor from '../ListItem/List';
 import * as C from './styles';
 import ImagemFake from '../../assets/sem-imagem7.jpg';
 

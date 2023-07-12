@@ -42,6 +42,14 @@ $ npm start
 ```
 O app estará disponível no endereço http://localhost:3000.
 
+4. Para fazer o login cadastre-se com email e senha ou use um email padão:
+
+````
+email : teste@gmail.com
+senha : 123456
+
+
+
 ## Sobre o Projeto
 
 MotoStore é uma aplicação onde você pode cadastrar motos e usuários e visualizar a lista de motos vendidas.
