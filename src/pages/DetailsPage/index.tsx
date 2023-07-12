@@ -24,6 +24,7 @@ interface Sale {
     imageUrl: string;
     name: string;
     brand: string;
+    displacement: string;
     date: Date;
     client: string;
     price: string;
@@ -61,6 +62,7 @@ export default function DetailsPage() {
             name: motocycle.name,
             brand: motocycle.brand,
             price: motocycle.price,
+            displacement: motocycle.displacement
         };
         if (sale.client !== '') {
             const conf = window.confirm('Deseja Finalizar a venda?');

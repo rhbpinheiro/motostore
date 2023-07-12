@@ -26,6 +26,7 @@ interface Sale {
     date: Date;
     client: string;
     amount: number;
+    displacement: string;
     price: string;
     motocycle: Motocycle;
     total: string;
@@ -101,6 +102,7 @@ export default function SalesPage() {
                                 imageUrl={sale.imageUrl}
                                 name={sale.name}
                                 brand={sale.brand}
+                                displacement={sale.displacement}
                                 children={
                                     <>
                                         <C.Description>
