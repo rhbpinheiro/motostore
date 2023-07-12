@@ -79,4 +79,10 @@ export const ModalContent = styled.div`
     height: 350px;
     padding: 20px;
     border-radius: 15px;
+    @media (max-width: 768px) {
+        width: 300px;
+    }
+    @media (max-width: 500px) {
+      width: 70%;
+    }
 `;
