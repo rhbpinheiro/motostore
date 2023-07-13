@@ -13,6 +13,8 @@ export default function Login() {
     const navigate = useNavigate();
     const [signInWithEmailAndPassword, user, loading, error] =
         useSignInWithEmailAndPassword(auth);
+    const isUser = user;
+    const isError = error;
 
     useEffect(() => {
         const unsubscribe = auth.onAuthStateChanged((user) => {
@@ -30,26 +32,20 @@ export default function Login() {
         e.preventDefault();
 
         await signInWithEmailAndPassword(email, password);
-        Swal.fire({
-            title: 'Sucesso!!!',
-            text: 'Email e senha confirmados.',
-            icon: 'success',
-            timer: 1500,
-            showConfirmButton: false,
-        });
+        if (email && password) {
+            Swal.fire({
+                title: 'Sucesso!!!',
+                text: 'Email e senha confirmados.',
+                icon: 'success',
+                timer: 1500,
+                showConfirmButton: false,
+            });
+        } 
     }
+
 
     if (loading) {
         return <Loading />;
-    }
-    if (error) {
-        Swal.fire({
-            title: 'Erro de login',
-            text: 'Email ou senha inválidos.',
-            icon: 'error',
-            timer: 1500,
-            showConfirmButton: false,
-        });
     }
 
     return (
