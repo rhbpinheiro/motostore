@@ -5,6 +5,7 @@ import { useCreateUserWithEmailAndPassword } from 'react-firebase-hooks/auth';
 import { auth } from '../../logic/firebase/config/firebaseconfig';
 import Loading from '../loading/Loading';
 import { useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2';
 
 export default function Register() {
     const [email, setEmail] = useState('');
@@ -25,7 +26,13 @@ export default function Register() {
             createUserWithEmailAndPassword(email, password);
             navigate('/');
         } else {
-            alert('Preencha os campos corretamente');
+            Swal.fire({
+                title: 'Atenão!!!',
+                text: 'Preencha os campos corretamente.',
+                icon: 'warning',
+                timer: 1500,
+                showConfirmButton: true,
+            });
         }
     }
     if (loading) {

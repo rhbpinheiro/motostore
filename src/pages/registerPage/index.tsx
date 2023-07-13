@@ -23,6 +23,7 @@ import IconUserAdd from '../../components/Icons/IconUserAdd';
 import RegisterUser from '../../components/RegisrerUser/Index';
 import IconDeleteOutline from '../../components/Icons/IconDeleteOutline';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
+import Swal from 'sweetalert2';
 
 interface Motocycle {
     id?: string;
@@ -125,7 +126,13 @@ export default function RegisterPage() {
             selectedMotorcycle.name === '' ||
             selectedMotorcycle.price === ''
         ) {
-            window.alert('Preencha todos os campos.');
+            Swal.fire({
+                position: 'center',
+                title: 'Atenção!!!',
+                icon: 'warning',
+                text: 'Todos os campos devem ser preenchidos.',
+                showConfirmButton: true,
+            });
             return;
         }
         if (selectedMotorcycle) {
@@ -157,12 +164,27 @@ export default function RegisterPage() {
                             : motocycle
                     )
                 );
+                Swal.fire({
+                    position: 'center',
+                    title: 'Sucesso!!!',
+                    icon: 'success',
+                    text: 'Produto atualizado com sucesso!.',
+                    showConfirmButton: false,
+                    timer: 2000,
+                });
+
                 handleCloseModal();
-                window.location.reload();
             } catch (error) {
-                console.error('Erro ao atualizar produto:', error);
+                Swal.fire({
+                    position: 'center',
+                    title: 'Erro!!!',
+                    icon: 'error',
+                    text: 'Erro ao adicionar produto.',
+                    showConfirmButton: true,
+                });
             } finally {
                 setIsLoading(false);
+                window.location.reload();
             }
         } else {
             window.alert('Preencha todos os campos.');
@@ -176,7 +198,13 @@ export default function RegisterPage() {
             selectedUser.email === '' ||
             selectedUser.phone === ''
         ) {
-            window.alert('Preencha todos os campos.');
+            Swal.fire({
+                position: 'center',
+                title: 'Atenção!!!',
+                icon: 'warning',
+                text: 'Todos os campos devem ser preenchidos.',
+                showConfirmButton: true,
+            });
             return;
         }
         if (selectedUser) {
@@ -196,12 +224,28 @@ export default function RegisterPage() {
                         user.id === selectedUser.id ? selectedUser : user
                     )
                 );
+
+                Swal.fire({
+                    position: 'center',
+                    title: 'Sucesso!!!',
+                    icon: 'success',
+                    text: 'Usuário editado com sucesso!',
+                    showConfirmButton: false,
+                    timer: 2000,
+                });
                 handleCloseModal();
-                window.location.reload();
             } catch (error) {
-                console.error('Erro ao atualizar produto:', error);
+                Swal.fire({
+                    position: 'center',
+                    title: 'Erro!!!',
+                    icon: 'error',
+                    text: 'Erro ao atualizar o usuário.',
+                    showConfirmButton: true,
+                    timer: 2000,
+                });
             } finally {
                 setIsLoading(false);
+                window.location.reload();
             }
         }
     };
@@ -215,7 +259,13 @@ export default function RegisterPage() {
             selectedMotorcycle.name === '' ||
             selectedMotorcycle.price === ''
         ) {
-            window.alert('Preencha todos os campos.');
+            Swal.fire({
+                position: 'center',
+                title: 'Atenção!!!',
+                icon: 'warning',
+                text: 'Todos os campos devem ser preenchidos.',
+                showConfirmButton: true,
+            });
             return;
         }
         if (selectedMotorcycle) {
@@ -237,14 +287,27 @@ export default function RegisterPage() {
                     description,
                     price,
                 });
-                console.log('Produto adicionado com ID:', docRef.id);
+                Swal.fire({
+                    position: 'center',
+                    icon: 'success',
+                    title: 'Sucesso!!!',
+                    text: 'Produto adionada com sucesso!',
+                    showConfirmButton: false,
+                    timer: 2000,
+                });
 
                 handleCloseModal();
-                window.location.reload();
             } catch (error) {
-                console.error('Erro ao adicionar produto:', error);
+                Swal.fire({
+                    position: 'center',
+                    title: 'Erro!!!',
+                    icon: 'error',
+                    text: 'Erro ao adicionar o produto.',
+                    showConfirmButton: true,
+                });
             } finally {
                 setIsLoading(false);
+                window.location.reload();
             }
         }
     };
@@ -256,7 +319,13 @@ export default function RegisterPage() {
             selectedUser.email === '' ||
             selectedUser.phone === ''
         ) {
-            window.alert('Preencha todos os campos.');
+            Swal.fire({
+                position: 'center',
+                title: 'Atenção!!!',
+                icon: 'warning',
+                text: 'Todos os campos devem ser preenchidos.',
+                showConfirmButton: true,
+            });
             return;
         }
         if (selectedUser) {
@@ -269,22 +338,46 @@ export default function RegisterPage() {
                     email,
                     phone,
                 });
-                console.log('Produto adicionado com ID:', docRef.id);
+                Swal.fire({
+                    position: 'center',
+                    title: 'Sucesso!!!',
+                    icon: 'success',
+                    text: 'Usuário adicionado com sucesso!',
+                    showConfirmButton: false,
+                    timer: 2000,
+                });
                 handleCloseModal();
-                window.location.reload();
             } catch (error) {
-                console.error('Erro ao adicionar produto:', error);
+                Swal.fire({
+                    position: 'center',
+                    title: 'Rrro!!!',
+                    icon: 'error',
+                    text: 'Erro ao adicionar usuário.',
+                    showConfirmButton: true,
+                });
             } finally {
                 setIsLoading(false);
+                window.location.reload();
             }
         }
     };
     const handleDelete = async (id: string, colecttion: string) => {
-        const confir = window.confirm('Deseja realmente excluir?');
-        if (confir) {
-            await deleteDoc(doc(db, colecttion, id));
-            window.location.reload();
-        }
+        Swal.fire({
+            title: 'Tem certeza?',
+            text: 'Você não poderá desfazer isso!',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#35d630',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Confirmar!',
+            cancelButtonText: 'Cancelar!',
+        }).then(async (result) => {
+            if (result.isConfirmed) {
+                await deleteDoc(doc(db, colecttion, id));
+                Swal.fire('Excluido com sucesso!');
+                window.location.reload();
+            }
+        });
     };
 
     useEffect(() => {

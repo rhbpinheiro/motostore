@@ -8,6 +8,7 @@ import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import DefaultLayout from '../../components/LayoutContainer/indes';
 import { db } from '../../logic/firebase/config/firebaseconfig';
 import { Input } from './styles';
+import Swal from 'sweetalert2';
 
 interface Motocycle {
     id: string;
@@ -36,8 +37,6 @@ export default function DetailsPage() {
     const location = useLocation();
     const motocycle = location.state?.motorcycle as Motocycle;
     const [clientName, setclientName] = useState('');
-    const [saleAmount, setSaleAmount] = useState(0);
-    const [total, setTotal] = useState(0);
     const [isLoading, setIsLoading] = useState(false);
     const auth = getAuth();
     const currentDate = new Date(Date.now());
@@ -62,30 +61,50 @@ export default function DetailsPage() {
             name: motocycle.name,
             brand: motocycle.brand,
             price: motocycle.price,
-            displacement: motocycle.displacement
+            displacement: motocycle.displacement,
         };
+        if (sale.client === '') {
+            Swal.fire({
+                title: 'Atenção!!!',
+                text: 'Todos os campor devem ser preenchidos.',
+                icon: 'warning',
+                showConfirmButton: true,
+            });
+            return;
+        }
         if (sale.client !== '') {
-            const conf = window.confirm('Deseja Finalizar a venda?');
-            if (conf) {
-                try {
-                    setIsLoading(true);
-                    const docRef = await addDoc(collection(db, 'sales'), sale);
-                    console.log('Sale added with ID: ', docRef.id);
-                    // Reset input fields
-                    setclientName('');
-                    setSaleAmount(0);
-                } catch (error) {
-                    console.error('Error adding sale: ', error);
-                } finally {
-                    navigate('/home');
-                    setIsLoading(false);
-                }
+            try {
+                Swal.fire({
+                    title: 'Atenção!',
+                    text: 'Deseja confirmar a venda?',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#35d630',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Confirmar!',
+                    cancelButtonText: 'Cancelar!',
+                }).then(async (result) => {
+                    if (result.isConfirmed) {
+                        setIsLoading(true);
+                        await addDoc(collection(db, 'sales'), sale);
+                        Swal.fire('Venda realizada com sucesso'!);
+                        navigate('/home');
+                    }
+                });
+
+                setclientName('');
+            } catch (error) {
+                Swal.fire({
+                    title: 'Erro!!!',
+                    text: 'Erro ao ralizar a venda.',
+                    icon: 'error',
+                    showConfirmButton: true,
+                });
+            } finally {
+                setIsLoading(false);
             }
-        } else {
-            window.alert('Preencha os todos os campos antes de confirmar.');
         }
     };
-  
 
     useEffect(() => {
         onAuthStateChanged(auth, (user) => {
