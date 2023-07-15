@@ -13,7 +13,7 @@ Lista de tecnologias utilizadas no projeto:
 
 ```bash
 $ https://github.com/rhbpinheiro/motostore
-$ cd bitcent
+$ cd motostore
 ```
 
 2. Crie um projeto no Firebase e ative o Firestore e Autenticação com Email e Senha.

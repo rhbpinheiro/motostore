@@ -26,7 +26,7 @@ export default function Login() {
         });
 
         return () => unsubscribe();
-    }, [navigate]);
+    }, []);
 
     async function handleSignIn(e: any) {
         e.preventDefault();
