@@ -1,11 +1,11 @@
+import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useSignInWithEmailAndPassword } from 'react-firebase-hooks/auth';
+import Swal from 'sweetalert2';
+import Loading from '../loading/Loading';
+import { auth } from '../../logic/firebase/config/firebaseconfig';
 import * as C from './styles';
 import Logo from '../../assets/logo.png';
-import { useSignInWithEmailAndPassword } from 'react-firebase-hooks/auth';
-import { useEffect, useState } from 'react';
-import { auth } from '../../logic/firebase/config/firebaseconfig';
-import Loading from '../loading/Loading';
-import { useNavigate } from 'react-router-dom';
-import Swal from 'sweetalert2';
 
 export default function Login() {
     const [email, setEmail] = useState('');
@@ -13,8 +13,6 @@ export default function Login() {
     const navigate = useNavigate();
     const [signInWithEmailAndPassword, user, loading, error] =
         useSignInWithEmailAndPassword(auth);
-    const isUser = user;
-    const isError = error;
 
     useEffect(() => {
         const unsubscribe = auth.onAuthStateChanged((user) => {
@@ -32,6 +30,7 @@ export default function Login() {
         e.preventDefault();
 
         await signInWithEmailAndPassword(email, password);
+
         if (email && password) {
             Swal.fire({
                 title: 'Sucesso!!!',
@@ -40,9 +39,8 @@ export default function Login() {
                 timer: 1500,
                 showConfirmButton: false,
             });
-        } 
+        }
     }
-
 
     if (loading) {
         return <Loading />;
@@ -53,22 +51,18 @@ export default function Login() {
             <C.ComponentLogin>
                 <C.ImageLogo src={Logo} alt="logo" />
                 <C.Title>Login</C.Title>
-                <C.Form>
+                <C.Form onSubmit={handleSignIn}>
                     <C.Input
                         type="text"
                         placeholder="Email"
                         value={email}
-                        onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                            setEmail(e.target.value)
-                        }
+                        onChange={(e: any) => setEmail(e.target.value)}
                     />
                     <C.Input
                         type="password"
                         placeholder="Password"
                         value={password}
-                        onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-                            setPassword(e.target.value)
-                        }
+                        onChange={(e: any) => setPassword(e.target.value)}
                     />
                     <C.Button type="submit" onClick={handleSignIn}>
                         Login
